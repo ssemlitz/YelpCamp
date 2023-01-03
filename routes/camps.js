@@ -7,10 +7,9 @@ router.get('/', (req, res) => {
   res.render('home')
 })
 
-router.get('/makecampground', async (req, res) => {
-  const camp = new Campground({ title: 'My backyard', description: 'cheap camping'})
-  await camp.save()
-  res.send(camp)
+router.get('/campgrounds', async (req, res) => {
+  const campgrounds = await Campground.find({})
+  res.render('campgrounds/index', { campgrounds })
 })
 
 export {
