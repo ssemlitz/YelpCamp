@@ -33,6 +33,8 @@ app.set(
 )
 app.set('view engine', 'ejs')
 
+app.use(express.urlencoded({extended: true}))
+
 // basic middleware
 app.use(methodOverride('_method'))
 app.use(logger('dev'))
