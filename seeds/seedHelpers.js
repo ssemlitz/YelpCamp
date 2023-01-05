@@ -1,4 +1,4 @@
-descriptors = [
+let descriptors = [
   'Forest',
   'Ancient',
   'Petrified',
@@ -19,7 +19,7 @@ descriptors = [
   'Diamond'
 ]
 
-places = [
+let places = [
   'Flats',
   'Village',
   'Canyon',
