@@ -8,6 +8,7 @@ import session from 'express-session'
 import logger from 'morgan'
 import methodOverride from 'method-override'
 import passport from 'passport'
+import ejsMate from 'ejs-mate'
 
 // import custom middleware
 import { passDataToView } from './middleware/middleware.js'
@@ -21,12 +22,13 @@ import'./config/passport.js'
 // import routes
 import { router as indexRouter } from './routes/index.js'
 import { router as authRouter } from './routes/auth.js'
-import { router as campsRouter } from './routes/camps.js'
+import { router as campgroundsRouter } from './routes/campgrounds.js'
 
 // create the express app
 const app = express()
 
 // view engine setup
+app.engine('ejs', ejsMate)
 app.set(
   'views',
   path.join(path.dirname(fileURLToPath(import.meta.url)), 'views')
@@ -68,7 +70,7 @@ app.use(passDataToView)
 // router middleware
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
-app.use('/camps', campsRouter)
+app.use('/campgrounds', campgroundsRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
