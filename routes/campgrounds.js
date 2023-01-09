@@ -1,28 +1,30 @@
 import { Router } from 'express'
 import { Campground } from "../models/campground.js"
+import * as campgroundsCtrl from '../controllers/campgrounds.js'
+import { isLoggedIn } from '../middleware/middleware.js'
 // import { campgroundSchema } from '../schemas.js'
 // import { validateCampground } from '../middleware/middleware.js'
 
 const router = Router()
 
-// router.get('/', async (req, res) => {
-//   const campgrounds = await Campground.find({})
-//   res.render('campgrounds/index', { campgrounds })
-// })
-
 router.get('/', async (req, res) => {
-  Campground.find({})
-  .then(campgrounds => {
-    res.render('campgrounds/index', {
-      campgrounds,
-      title: 'All Campgrounds'
-    })
-  })
-  .catch(err => {
-    console.log(err)
-    res.redirect("/")
-  })
+  const campgrounds = await Campground.find({})
+  res.render('campgrounds/index', { campgrounds })
 })
+
+// router.get('/', async (req, res) => {
+//   Campground.find({})
+//   .then(campgrounds => {
+//     res.render('campgrounds/index', {
+//       campgrounds,
+//       title: 'All Campgrounds'
+//     })
+//   })
+//   .catch(err => {
+//     console.log(err)
+//     res.redirect("/")
+//   })
+// })
 
 router.get('/new', (req, res) => {
   res.render('campgrounds/new', {
@@ -35,6 +37,8 @@ router.post('/', async (req, res) => {
   await campground.save()
   res.redirect(`/campgrounds/${campground._id}`)
 })
+
+router.post('/', campgroundsCtrl.create)
 
 router.get('/:id', async (req, res) => {
   const campground = await Campground.findById(req.params.id)
