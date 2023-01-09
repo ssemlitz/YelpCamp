@@ -1,15 +1,33 @@
 import { Router } from 'express'
 import { Campground } from "../models/campground.js"
+// import { campgroundSchema } from '../schemas.js'
+// import { validateCampground } from '../middleware/middleware.js'
 
 const router = Router()
 
+// router.get('/', async (req, res) => {
+//   const campgrounds = await Campground.find({})
+//   res.render('campgrounds/index', { campgrounds })
+// })
+
 router.get('/', async (req, res) => {
-  const campgrounds = await Campground.find({})
-  res.render('campgrounds/index', { campgrounds })
+  Campground.find({})
+  .then(campgrounds => {
+    res.render('campgrounds/index', {
+      campgrounds,
+      title: 'All Campgrounds'
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/")
+  })
 })
 
 router.get('/new', (req, res) => {
-  res.render('campgrounds/new')
+  res.render('campgrounds/new', {
+    title: 'Add Campground'
+  })
 })
 
 router.post('/', async (req, res) => {
