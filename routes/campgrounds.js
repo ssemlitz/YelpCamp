@@ -2,8 +2,8 @@ import { Router } from 'express'
 import { Campground } from "../models/campground.js"
 import * as campgroundsCtrl from '../controllers/campgrounds.js'
 import { isLoggedIn } from '../middleware/middleware.js'
-// import { campgroundSchema } from '../schemas.js'
-// import { validateCampground } from '../middleware/middleware.js'
+import { campgroundSchema } from '../schemas.js'
+import { validateCampground } from '../middleware/middleware.js'
 
 const router = Router()
 
@@ -32,7 +32,7 @@ router.get('/new', (req, res) => {
   })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', validateCampground, async (req, res) => {
   const campground = new Campground(req.body.campground)
   await campground.save()
   res.redirect(`/campgrounds/${campground._id}`)

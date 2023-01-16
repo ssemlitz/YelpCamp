@@ -9,6 +9,7 @@ import logger from 'morgan'
 import methodOverride from 'method-override'
 import passport from 'passport'
 import ejsMate from 'ejs-mate'
+import { ExpressError } from './utils/ExpressError.js'
 
 // import custom middleware
 import { passDataToView } from './middleware/middleware.js'
@@ -71,6 +72,10 @@ app.use(passDataToView)
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/campgrounds', campgroundsRouter)
+
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404))
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

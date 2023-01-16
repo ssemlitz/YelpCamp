@@ -1,5 +1,6 @@
-// import { campgroundSchema } from "../schemas.js"
+import { campgroundSchema } from "../schemas.js"
 import Joi from 'joi'
+import { ExpressError } from '../utils/ExpressError.js'
 
 function validateCampground(req, res, next) {
   const { error } = campgroundSchema.validate(req.body);
